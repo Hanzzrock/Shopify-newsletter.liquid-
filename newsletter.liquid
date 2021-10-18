@@ -1,0 +1,60 @@
+{% assign pxs_newsletter_snippet_tags = 'prospect' %}
+
+{%- if template contains 'password' %}
+  {% assign pxs_newsletter_snippet_tags = pxs_newsletter_snippet_tags | append: ', password page' %}
+{%- else -%}
+  {% assign pxs_newsletter_snippet_tags = pxs_newsletter_snippet_tags | append: ', newsletter' %}
+{%- endif -%}
+
+<div class="pxs-newsletter-form">
+  {% form 'customer', id: pxs_newsletter_form_id %}
+    {% if form.posted_successfully? %}
+      <p class="pxs-newsletter-snippet-success">
+        {{ pxs_newsletter_form_success }}
+      </p>
+    {% else %}
+      <input
+        type="hidden"
+        name="contact[tags]"
+        value="{{ newsletter_tags }}"
+      />
+
+      <div class="pxs-newsletter-form-fields">
+        <div class="pxs-newsletter-form-field">
+          <label
+            class="pxs-newsletter-form-label"
+            for="pxs-newsletter-form-email"
+          >
+            {{ pxs_newsletter_form_placeholder }}
+          </label>
+
+          <input
+            class="pxs-newsletter-form-input"
+            name="contact[email]"
+            id="pxs-newsletter-form-email"
+            type="email"
+            placeholder="{{ pxs_newsletter_form_placeholder }}"
+            aria-label="{{ pxs_newsletter_form_placeholder }}" 
+            required />
+        </div>
+
+        <div class="pxs-newsletter-form-field">
+          <button
+            class="pxs-newsletter-form-button"
+            name="subscribe"
+            type="submit"
+          >
+            {{ pxs_newsletter_form_submit }}
+          </button>
+        </div>
+        
+      </div>
+   <div class="col-12 text-center newsletter-consent align-self-top">
+
+	<p><br><input type="checkbox" id="gdpr-account-0" name="gdpr-consent" value="1" class="checkbox required-entry form-check-control form-check-input" required autocomplete="off">
+	<label class="gdpr-consent form-check-label" for="gdpr-account-0">I agree to receive GK HAIR emails and I have read, understand and agree to be bound by the <a href="https://gkhair.co.uk/pages/terms-conditions">Terms and Conditions</a> and <a href="https://gkhair.co.uk/pages/privacy-policy">Privacy Policy</a>.</label></p>
+		</div>
+    {% endif %}
+  {% endform %}
+ 
+</div>
