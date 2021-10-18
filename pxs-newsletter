@@ -1,0 +1,193 @@
+{% assign pxs_newsletter_form_success = 'form.success' | t %}
+{% assign pxs_newsletter_form_placeholder = 'form.placeholder' | t %}
+{% assign pxs_newsletter_form_submit = 'form.submit' | t %}
+{% assign pxs_newsletter_form_id = 'pxs-newsletter-' | append: section.id %}
+
+<script
+  type="application/json"
+  data-section-type="pxs-newsletter"
+  data-section-id="{{ section.id }}"
+>
+</script>
+
+<section
+  class="
+    pxs-newsletter
+    pxs-newsletter-desktop-alignment-{{ section.settings.desktop_alignment }}
+    pxs-newsletter-mobile-alignment-{{ section.settings.mobile_alignment }}
+  "
+>
+  {% if section.settings.image %}
+    <figure
+      class="pxs-newsletter-figure"
+      {%
+        include 'rimg',
+        img: section.settings.image,
+        size: '500x',
+        background: true,
+        lazy: true
+      %}
+    >
+      {%
+        include 'rimg',
+        img: section.settings.image,
+        class: 'pxs-newsletter-image',
+        size: '500x',
+        canvas: true,
+        lazy: true
+      %}
+    </figure>
+  {% endif %}
+
+  <div class="pxs-newsletter-content">
+    <div class="pxs-newsletter-header">
+      {% if section.settings.title != blank %}
+        <h2 class="pxs-newsletter-heading">
+          {{ section.settings.title | escape }}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.text != blank %}
+        <div class="pxs-newsletter-text">
+          {{ section.settings.text }}
+        </div>
+      {% endif %}
+    </div>
+
+    {%
+      include 'newsletter',
+      pxs_newsletter_image: pxs_newsletter_image,
+      pxs_newsletter_form_success: pxs_newsletter_form_success,
+      pxs_newsletter_form_placeholder: pxs_newsletter_form_placeholder,
+      pxs_newsletter_form_submit: pxs_newsletter_form_submit,
+      pxs_newsletter_form_id: pxs_newsletter_form_id
+    %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "class": "pxs-newsletter-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Newsletter"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Invite customers to join your mailing list.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "desktop_alignment",
+      "label": "Desktop image alignment",
+      "options": [
+        { "label": "Left", "value": "left" },
+        { "label": "Right", "value": "right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "mobile_alignment",
+      "label": "Mobile image alignment",
+      "options": [
+        { "label": "Top", "value": "top" },
+        { "label": "Bottom", "value": "bottom" }
+      ],
+      "default": "top"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter",
+      "category": "Promotional"
+    }
+  ],
+  "locales": {
+    "en": {
+      "form": {
+        "placeholder": "Email address",
+        "submit": "Subscribe",
+        "success": "Thanks for subscribing!"
+      }
+    }
+  }
+}
+
+{% endschema %}
+
+<style>
+  .pxs-newsletter-content {
+    padding: 50px !important;
+}
+  .pxs-newsletter {
+    width: 100%;
+    max-width: 1592px;
+    min-width: 690px;
+    padding: 53px 15px 0;
+    margin: 0 auto;
+    background: #fee4b0; 
+}
+  .col-12.text-center.newsletter-consent.align-self-top {
+    text-align: center !important;
+      font-size: 15px;
+  
+}
+  .pxs-newsletter-form, .pxs-newsletter-header {
+    width: 80%;
+    max-width: 100%;
+}
+  
+  h2.pxs-newsletter-heading {
+    font-size: 35px !important;
+    margin-bottom: 20px;
+    font-family: 'Oswald' !important;
+    letter-spacing: .2em;
+}
+  @media only screen and (max-width: 767px) {
+  
+  .pxs-newsletter-content {
+    padding: 42px !important;
+}
+    .pxs-newsletter-form, .pxs-newsletter-header {
+    width: 94%;
+    max-width: 100%;
+}
+    h2.pxs-newsletter-heading {
+    font-size: 25px !important;
+    margin-bottom: 20px;
+    font-family: 'Oswald' !important;
+    letter-spacing: .2em;
+    margin-top: 19px;
+}
+    .col-12.text-center.newsletter-consent.align-self-top {
+    text-align: center !important;
+    font-size: 10px;
+}
+    .pxs-newsletter {
+    width: 121%;
+    max-width: 1514px;
+    min-width: 361px;
+    padding: 0;
+    margin: 0 auto;
+    background: #fee4b0;
+    margin-left: -35px;
+}
+    input#gdpr-account-0 {
+    position: relative;
+    top: 4px;
+}
+  
+  }
+</style>
